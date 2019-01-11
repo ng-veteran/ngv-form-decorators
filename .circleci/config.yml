@@ -24,15 +24,3 @@ jobs:
       - run:
         name: lint
         command: npm run lint ngv-form-decorators
-      # - run:
-      #   name: test
-      #   command: npm run test ngv-form-decorators -- --progress --watch false --code-coverage
-      # - run:
-      #   name: build
-      #   command: npm run build  ngv-form-decorators --prod
-      # - deploy:
-      #   command:
-      #     - echo "//registry.npmjs.org/:_authToken=dfb9285d-7377-4fe9-8bbe-6e79523569fd" >> ~/.npmrc
-      #     - npm publish ./dist/ngv-form-decorators
-      # - store_artifacts:
-      #   path: ./dist/ngv-form-decorators
