@@ -3,7 +3,7 @@ executors:
   npm:
     working_directory: ~/ngv-form-decorators
     docker:
-      -image: cirecleci/node:10.15.2
+      -image: circleci/node:10.15.2
 jobs:
   build:
     executor: npm
