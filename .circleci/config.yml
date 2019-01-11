@@ -30,7 +30,9 @@ jobs:
       - store_artifacts:
           path: coverage
           prefix: coverage
-      - run
+      - store_test_artifacts:
+          path: coverage/icov.info
+          prefix: coverage/icov.info
 workflows:
   version: 2.1
   workflow:
