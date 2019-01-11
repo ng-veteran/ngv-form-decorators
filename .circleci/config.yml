@@ -27,6 +27,6 @@ jobs:
       - run:
           name: test
           command: npm run test ngv-form-decorators --watch false --code-coverage
-       - store_artifacts:
+      - store_artifacts:
           path: coverage
           prefix: coverage
