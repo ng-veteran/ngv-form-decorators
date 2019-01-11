@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/ng-veteran/ngv-form-decorators.svg?style=svg)](https://circleci.com/gh/ng-veteran/ngv-form-decorators)
+
 # NgvFormDecoratorsDemo
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.0.
