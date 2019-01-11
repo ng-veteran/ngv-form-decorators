@@ -1,0 +1,38 @@
+version: 2.1
+executors:
+  npm:
+    working_directory: ~/ngv-form-decorators
+    docker:
+      -image: cirecleci/node:10.15.2
+jobs:
+  build:
+    executor: npm
+    steps:
+      - checkout
+      - run:
+        name: update-npm
+        command: 'sudo npm install -g npm@latest'
+      - restore_cache:
+        key: restore_cache-{{ checksum "package.json"}}
+      - run:
+        name: install-npm
+        command: npm install
+      - save_cache:
+        key: dependency-cache-{{ checksum "package.json" }}
+        paths:
+          - ./node_modules
+      - run:
+        name: lint
+        command: npm run lint ngv-form-decorators
+      # - run:
+      #   name: test
+      #   command: npm run test ngv-form-decorators -- --progress --watch false --code-coverage
+      # - run:
+      #   name: build
+      #   command: npm run build  ngv-form-decorators --prod
+      # - deploy:
+      #   command:
+      #     - echo "//registry.npmjs.org/:_authToken=dfb9285d-7377-4fe9-8bbe-6e79523569fd" >> ~/.npmrc
+      #     - npm publish ./dist/ngv-form-decorators
+      # - store_artifacts:
+      #   path: ./dist/ngv-form-decorators
