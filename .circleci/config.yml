@@ -26,7 +26,7 @@ jobs:
           command: npm run lint ngv-form-decorators
       - run:
           name: test
-          command: npm run test ngv-form-decorators --watch false --code-coverage   --progress false
+          command: npm run test ngv-form-decorators -- --watch false --code-coverage   --progress false
       - store_artifacts:
           path: coverage
           prefix: coverage
