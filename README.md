@@ -1,4 +1,5 @@
 [![CircleCI](https://circleci.com/gh/ng-veteran/ngv-form-decorators.svg?style=svg)](https://circleci.com/gh/ng-veteran/ngv-form-decorators)
+[![codecov](https://codecov.io/gh/ng-veteran/ngv-form-decorators/branch/master/graph/badge.svg)](https://codecov.io/gh/ng-veteran/ngv-form-decorators)
 
 # NgvFormDecoratorsDemo
 
