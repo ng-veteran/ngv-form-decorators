@@ -26,13 +26,12 @@ jobs:
           command: npm run lint ngv-form-decorators
       - run:
           name: test
-          command: npm run test ngv-form-decorators -- --watch false --code-coverage   --progress false
+          command:
+            - npm run test ngv-form-decorators -- --watch false --code-coverage   --progress false
+            - bash <(curl -s https://codecov.io/bash)
       - store_artifacts:
           path: coverage
           prefix: coverage
-      - store_test_results:
-          path: coverage/icov.info
-          prefix: coverage/icov.info
 workflows:
   version: 2.1
   build:
