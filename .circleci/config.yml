@@ -30,7 +30,7 @@ jobs:
       - store_artifacts:
           path: coverage
           prefix: coverage
-      - coverage:
+      - run:
           name: coverage
           command:  bash <(curl -s https://codecov.io/bash)
 workflows:
