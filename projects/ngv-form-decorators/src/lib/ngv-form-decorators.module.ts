@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
-import { NgvFormDecoratorsComponent } from './ngv-form-decorators.component';
 
 @NgModule({
-  declarations: [NgvFormDecoratorsComponent],
+  declarations: [],
   imports: [
   ],
-  exports: [NgvFormDecoratorsComponent]
+  exports: []
 })
 export class NgvFormDecoratorsModule { }

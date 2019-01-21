@@ -1,4 +1,4 @@
-version: 2.1
+version: 2.0
 executors:
   npm:
     working_directory: ~/ngv-form-decorators
@@ -33,8 +33,11 @@ jobs:
       - run:
           name: coverage
           command:  bash <(curl -s https://codecov.io/bash)
+      - run:
+          name: build
+          command: npm run build ngv-form-decorators
 workflows:
-  version: 2.1
+  version: 2.0
   build:
     jobs:
       - build
