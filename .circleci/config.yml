@@ -29,7 +29,6 @@ jobs:
           command: npm run test ngv-form-decorators -- --watch false --code-coverage   --progress false
       - store_test_artifacts:
           path: coverage
-          prefix: coverage
       - run:
           name: coverage
           command:  bash <(curl -s https://codecov.io/bash)
