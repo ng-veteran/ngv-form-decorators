@@ -27,7 +27,7 @@ jobs:
       - run:
           name: test
           command: npm run test ngv-form-decorators -- --watch false --code-coverage   --progress false
-      - store_artifacts:
+      - store_test_artifacts:
           path: coverage
           prefix: coverage
       - run:
@@ -36,6 +36,9 @@ jobs:
       - run:
           name: build
           command: npm run build ngv-form-decorators
+      - store_artifacts:
+          path: dist
+          prefix: dist
 workflows:
   version: 2.1
   build:
