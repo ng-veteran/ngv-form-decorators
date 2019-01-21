@@ -36,9 +36,6 @@ jobs:
       - run:
           name: build
           command: npm run build ngv-form-decorators
-      - store_artifacts:
-          path: dist
-          prefix: dist
 workflows:
   version: 2.1
   build:
