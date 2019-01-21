@@ -1,4 +1,4 @@
-version: 2.0
+version: 2.1
 executors:
   npm:
     working_directory: ~/ngv-form-decorators
@@ -37,7 +37,7 @@ jobs:
           name: build
           command: npm run build ngv-form-decorators
 workflows:
-  version: 2.0
+  version: 2.1
   build:
     jobs:
       - build
