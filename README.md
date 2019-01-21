@@ -1,6 +1,8 @@
 [![CircleCI](https://circleci.com/gh/ng-veteran/ngv-form-decorators.svg?style=svg)](https://circleci.com/gh/ng-veteran/ngv-form-decorators)
 [![codecov](https://codecov.io/gh/ng-veteran/ngv-form-decorators/branch/master/graph/badge.svg)](https://codecov.io/gh/ng-veteran/ngv-form-decorators)
 [![npm version](https://badge.fury.io/js/%40ng-veteran%2Fngv-form-decorators.svg)](https://badge.fury.io/js/%40ng-veteran%2Fngv-form-decorators)
+[![dependencies Status](https://david-dm.org/ng-veteran/ngv-form-decorators/status.svg)](https://david-dm.org/ng-veteran/ngv-form-decorators)
+[![devDependencies Status](https://david-dm.org/ng-veteran/ngv-form-decorators/dev-status.svg)](https://david-dm.org/ng-veteran/ngv-form-decorators?type=dev)
 
 # NgvFormDecoratorsDemo
 
