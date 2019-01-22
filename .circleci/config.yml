@@ -81,15 +81,15 @@ workflows:
     jobs:
       - update
       - test:
-          requireds:
+          requires:
             - update
       - build:
-          requireds:
+          requires:
             - update
       - build-docs:
-          requireds:
+          requires:
             - update
       - deploy-docs:
-          requireds:
+          requires:
             - build-docs
 
