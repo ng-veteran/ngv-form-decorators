@@ -24,6 +24,7 @@ jobs:
   build:
     executor: npm
     steps:
+      - checkout
       - run:
           name: lint
           command: npm run lint ngv-form-decorators
@@ -36,6 +37,7 @@ jobs:
   test:
     executor: npm
     steps:
+      - checkout
       - run:
           name: test
           command: npm run test ngv-form-decorators -- --watch false --code-coverage   --progress false
@@ -48,6 +50,7 @@ jobs:
   build-docs:
     executor: npm
     steps:
+      - checkout
       - run:
           name: docs-build
           command: npm run build -- --prod --base-href "https://ng-veteran.github.io/ngv-form-decorators/"
@@ -57,6 +60,7 @@ jobs:
   deploy-docs:
     executor: npm
     steps:
+      - checkout
       - run:
           name: docs-deploy
           command: npx angular-cli-ghpages --dir dist/ngv-form-decorators-demo
@@ -81,8 +85,8 @@ workflows:
             - update_dependencies
       - build-docs:
           requires:
-            - update_dependencies
             - build
+            - test
       - deploy-docs:
           requires:
             - build-docs
