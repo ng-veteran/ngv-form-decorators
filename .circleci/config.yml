@@ -23,9 +23,6 @@ jobs:
             - ./node_modules
   build:
     executor: npm
-    branches:
-      ignore:
-        - gh-pages
     steps:
       - run:
           name: lint
@@ -38,9 +35,6 @@ jobs:
           destination: ngv-form-decorators
   test:
     executor: npm
-    branches:
-      ignore:
-        - gh-pages
     steps:
       - run:
           name: test
@@ -53,9 +47,6 @@ jobs:
           command:  bash <(curl -s https://codecov.io/bash)
   build-docs:
     executor: npm
-    branches:
-      ignore:
-        - gh-pages
     steps:
       - run:
           name: docs-build
@@ -65,9 +56,6 @@ jobs:
           destination: ngv-form-decorators-demo
   deploy-docs:
     executor: npm
-    branches:
-      ignore:
-        - gh-pages
     steps:
       - run:
           name: docs-deploy
@@ -76,10 +64,18 @@ workflows:
   version: 2.1
   update_build_test_deploy-docs:
     jobs:
-      - update_dependencies
+      - update_dependencies:
+          filters:
+            branches:
+              ignore:
+                - gh-pages
       - test:
           requires:
             - update_dependencies
+          filters:
+            branches:
+              ignore:
+                - gh-pages
       - build:
           requires:
             - update_dependencies
