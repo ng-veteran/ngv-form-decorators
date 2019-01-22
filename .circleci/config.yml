@@ -8,7 +8,8 @@ jobs:
   update:
     executor: npm
     branches:
-      ignore: gh-pages
+      ignore:
+        - gh-pages
     steps:
       - checkout
       - run:
@@ -26,7 +27,8 @@ jobs:
   build:
     executor: npm
     branches:
-      ignore: gh-pages
+      ignore:
+        - gh-pages
     steps:
       - run:
           name: lint
@@ -40,7 +42,8 @@ jobs:
   test:
     executor: npm
     branches:
-      ignore: gh-pages
+      ignore:
+        - gh-pages
     steps:
       - run:
           name: test
@@ -54,7 +57,8 @@ jobs:
   build-docs:
     executor: npm
     branches:
-      ignore: gh-pages
+      ignore:
+        - gh-pages
     steps:
       - run:
           name: docs-build
@@ -64,6 +68,9 @@ jobs:
           destination: ngv-form-decorators-demo
   deploy-docs:
     executor: npm
+    branches:
+      ignore:
+        - gh-pages
     steps:
       - run:
           name: docs-deploy
