@@ -7,9 +7,6 @@ executors:
 jobs:
   update_dependencies:
     executor: npm
-    branches:
-      ignore:
-        - gh-pages
     steps:
       - checkout
       - run:
