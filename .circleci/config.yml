@@ -5,7 +5,7 @@ executors:
     docker:
       - image: circleci/node:10-browsers-legacy
 jobs:
-  update:
+  update_dependencies:
     executor: npm
     branches:
       ignore:
@@ -77,18 +77,18 @@ jobs:
           command: npx angular-cli-ghpages --dir dist/ngv-form-decorators-demo
 workflows:
   version: 2.1
-  build_test_deploy-docs:
+  update_build_test_deploy-docs:
     jobs:
-      - update
+      - update_dependencies
       - test:
           requires:
-            - update
+            - update_dependencies
       - build:
           requires:
-            - update
+            - update_dependencies
       - build-docs:
           requires:
-            - update
+            - update_dependencies
       - deploy-docs:
           requires:
             - build-docs
