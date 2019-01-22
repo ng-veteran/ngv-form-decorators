@@ -13,7 +13,7 @@ jobs:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
       - restore_cache:
-          key: restore_cache-{{ checksum "package.json"}}
+          key: dependency-cache-{{ checksum "package.json"}}
       - run:
           name: install-npm
           command: npm install
@@ -24,9 +24,8 @@ jobs:
   build:
     executor: npm
     steps:
-      - checkout
       - restore_cache:
-          key: restore_cache-{{ checksum "package.json"}}
+          key: dependency-cache-{{ checksum "package.json"}}
       - run:
           name: lint
           command: npm run lint ngv-form-decorators
@@ -39,9 +38,8 @@ jobs:
   test:
     executor: npm
     steps:
-      - checkout
       - restore_cache:
-          key: restore_cache-{{ checksum "package.json"}}
+          key: dependency-cache-{{ checksum "package.json"}}
       - run:
           name: test
           command: npm run test ngv-form-decorators -- --watch false --code-coverage   --progress false
@@ -54,9 +52,8 @@ jobs:
   build-docs:
     executor: npm
     steps:
-      - checkout
       - restore_cache:
-          key: restore_cache-{{ checksum "package.json"}}
+          key: dependency-cache-{{ checksum "package.json"}}
       - run:
           name: docs-build
           command: npm run build -- --prod --base-href "https://ng-veteran.github.io/ngv-form-decorators/"
@@ -66,9 +63,8 @@ jobs:
   deploy-docs:
     executor: npm
     steps:
-      - checkout
       - restore_cache:
-          key: restore_cache-{{ checksum "package.json"}}
+          key: dependency-cache-{{ checksum "package.json"}}
       - run:
           name: docs-deploy
           command: npx angular-cli-ghpages --dir dist/ngv-form-decorators-demo
