@@ -24,6 +24,34 @@ describe('NgvFormDecorators', () => {
       ignore: false
     };
 
+    it('应该“只能为类型原型或类型构造方法添加配置”异常', () => {
+      expect(() => {
+        NgvFormDecorators.addConfig(NgvFormControlType.CONTROL, null, undefined, undefined);
+      }).toThrowError('只能为类型原型或类型构造方法添加配置');
+    });
+
+    it('应该可以添加属性配置到类型配置的属性配置列表', () => {
+      const customConfig: Partial<NgvFormConfig> = {
+        validators: (control: AbstractControl): ValidationErrors => {
+          return null;
+        }
+      };
+      class User {
+        name: string;
+      }
+      const classConfig = new NgvFormClassConfig();
+      classConfig.classConstructor = User;
+      classConfig.properties = new Map();
+      configs.set(User, classConfig);
+
+      const propertyName = 'name';
+      NgvFormDecorators.addConfig(NgvFormControlType.CONTROL, User, propertyName, customConfig);
+
+      const propertyConfig = configs.get(User).properties.get(propertyName);
+      expect(propertyConfig).toEqual(jasmine.any(NgvFormPropertyConfig));
+      expect(propertyConfig.propertyKey).toBe(propertyName);
+
+    });
 
     it('应该添加类型属性控件表单配置,且默认不校验器', () => {
       class User {
@@ -197,13 +225,144 @@ describe('NgvFormDecorators', () => {
       expect(form.value).toEqual(jasmine.objectContaining(defaultValue));
     });
 
-
     it('应该创建一个控件组，且带有子控件组', () => {
 
+      class Address {
+        detail: string;
+      }
+
+      class User {
+        address: Address;
+      }
+
+      const detailPropertyConfig = new NgvFormPropertyConfig();
+      detailPropertyConfig.type = NgvFormControlType.CONTROL;
+      detailPropertyConfig.propertyKey = 'detail';
+
+      const addressClassConfig = new NgvFormClassConfig();
+      addressClassConfig.classConstructor = Address;
+      addressClassConfig.properties = new Map();
+      addressClassConfig.properties.set(detailPropertyConfig.propertyKey, detailPropertyConfig);
+      configs.set(Address, addressClassConfig);
+
+
+      const addressPropertyConfig = new NgvFormPropertyConfig();
+      addressPropertyConfig.type = NgvFormControlType.GROUP;
+      addressPropertyConfig.classConstructor = Address;
+      addressPropertyConfig.propertyKey = 'address';
+
+      const userClassConfig = new NgvFormClassConfig();
+      userClassConfig.classConstructor = User;
+      userClassConfig.properties = new Map();
+      userClassConfig.properties.set(addressPropertyConfig.propertyKey, addressPropertyConfig);
+
+      const form = NgvFormDecorators.createControl(userClassConfig) as FormGroup;
+
+      expect(form).toEqual(jasmine.any(FormGroup));
+      expect(form.get(addressPropertyConfig.propertyKey)).toEqual(jasmine.any(FormGroup));
+      expect(form.get([addressPropertyConfig.propertyKey, detailPropertyConfig.propertyKey])).toEqual(jasmine.any(FormControl));
+    });
+
+    it('应该异常“不能创建属性address子控件组,Address没有配置表单控件组”', () => {
+
+      class Address {
+        detail: string;
+      }
+
+      class User {
+        address: Address;
+      }
+
+      const detailPropertyConfig = new NgvFormPropertyConfig();
+      detailPropertyConfig.type = NgvFormControlType.CONTROL;
+      detailPropertyConfig.propertyKey = 'detail';
+
+      const addressClassConfig = new NgvFormClassConfig();
+      addressClassConfig.classConstructor = Address;
+      addressClassConfig.properties = new Map();
+      addressClassConfig.properties.set(detailPropertyConfig.propertyKey, detailPropertyConfig);
+
+      const addressPropertyConfig = new NgvFormPropertyConfig();
+      addressPropertyConfig.type = NgvFormControlType.GROUP;
+      addressPropertyConfig.classConstructor = Address;
+      addressPropertyConfig.propertyKey = 'address';
+
+      const userClassConfig = new NgvFormClassConfig();
+      userClassConfig.classConstructor = User;
+      userClassConfig.properties = new Map();
+      userClassConfig.properties.set(addressPropertyConfig.propertyKey, addressPropertyConfig);
+
+      expect(() => {
+        NgvFormDecorators.createControl(userClassConfig);
+      }).toThrowError('不能创建属性address子控件组,Address没有配置表单控件组');
+
+    });
+
+    it('应该忽略创建属性控件', () => {
       class User {
         name = 'name';
         age: number;
       }
+
+      const nameConfig = new NgvFormPropertyConfig();
+      nameConfig.propertyKey = 'name';
+      nameConfig.type = NgvFormControlType.CONTROL;
+      nameConfig.validators = [
+        (control: AbstractControl): ValidationErrors => null
+      ];
+      const ageConfig = new NgvFormPropertyConfig();
+      ageConfig.propertyKey = 'age';
+      ageConfig.type = NgvFormControlType.CONTROL;
+      ageConfig.ignore = true;
+
+      const config = new NgvFormClassConfig();
+      config.classConstructor = User;
+      config.properties = new Map<string, NgvFormPropertyConfig>();
+      config.validators = (control: AbstractControl): ValidationErrors => null;
+      config.properties.set(nameConfig.propertyKey, nameConfig);
+      config.properties.set(ageConfig.propertyKey, ageConfig);
+
+      const defaultValue = new User();
+      const form = NgvFormDecorators.createControl(config) as FormGroup;
+
+      expect(form).toEqual(jasmine.any(FormGroup));
+      expect(form.get(nameConfig.propertyKey)).toEqual(jasmine.any(FormControl));
+      expect(form.get(ageConfig.propertyKey)).toBeNull();
+      expect(Object.keys(form.controls)).toEqual(Array.from(config.properties.keys()).filter(key => ageConfig.propertyKey !== key));
+      expect(form.value).toEqual(jasmine.objectContaining(defaultValue));
+    });
+
+    it('应该创建控件列表', () => {
+      class Address {
+        detail: string;
+      }
+
+      class User {
+        address: Array<Address>;
+      }
+
+      const detailPropertyConfig = new NgvFormPropertyConfig();
+      detailPropertyConfig.type = NgvFormControlType.CONTROL;
+      detailPropertyConfig.propertyKey = 'detail';
+
+      const addressClassConfig = new NgvFormClassConfig();
+      addressClassConfig.classConstructor = Address;
+      addressClassConfig.properties = new Map();
+      addressClassConfig.properties.set(detailPropertyConfig.propertyKey, detailPropertyConfig);
+      configs.set(Address, addressClassConfig);
+
+
+      const addressPropertyConfig = new NgvFormPropertyConfig();
+      addressPropertyConfig.type = NgvFormControlType.ARRAY;
+      addressPropertyConfig.classConstructor = Address;
+      addressPropertyConfig.propertyKey = 'address';
+
+      const userClassConfig = new NgvFormClassConfig();
+      userClassConfig.classConstructor = User;
+      userClassConfig.properties = new Map();
+      userClassConfig.properties.set(addressPropertyConfig.propertyKey, addressPropertyConfig);
+
+      const form = NgvFormDecorators.createControl(userClassConfig);
 
     });
   });
@@ -212,8 +371,6 @@ describe('NgvFormDecorators', () => {
     const validator = (control: AbstractControl): ValidationErrors => {
       return null;
     };
-
-
 
     describe('控件组', () => {
 
@@ -236,7 +393,6 @@ describe('NgvFormDecorators', () => {
         }
 
         expect(spyAddConfig).toHaveBeenCalledWith(NgvFormControlType.GROUP, User, undefined, config);
-
       });
 
       it('应该类型添加表单控件组子控件组配置', () => {

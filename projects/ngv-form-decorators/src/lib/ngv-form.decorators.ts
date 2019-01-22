@@ -8,8 +8,6 @@ import { NgvFormPropertyConfig } from './ngv-form-property-config';
 
 export class NgvFormDecorators {
 
-  constructor() { }
-
   static configs = new Map<Function, NgvFormClassConfig>();
 
   static addConfig(
@@ -23,6 +21,8 @@ export class NgvFormDecorators {
       targeClassConstructor = target.constructor as FunctionConstructor;
     } else if (isFunction(target)) {
       targeClassConstructor = target as FunctionConstructor;
+    } else {
+      throw new Error('只能为类型原型或类型构造方法添加配置');
     }
 
     // 初始化配置
@@ -55,7 +55,7 @@ export class NgvFormDecorators {
       config = Object.assign(config, root);
       // 更新class配置
       this.configs.set(targeClassConstructor, config);
-    } else if (config instanceof NgvFormPropertyConfig) {
+    } else {
       // 自动配置控件类型
       config.type = type;
       // 自动配置控件名称
@@ -66,7 +66,7 @@ export class NgvFormDecorators {
   }
 
 
-  static createControl(config: NgvFormConfig): AbstractControl {
+  static createControl(config: NgvFormClassConfig | NgvFormPropertyConfig): AbstractControl {
 
     if (config.ignore) {
       return null;
@@ -88,8 +88,11 @@ export class NgvFormDecorators {
           });
           control.patchValue(defaultValue);
         } else if (config instanceof NgvFormPropertyConfig) {
-          config = this.configs.get(config.classConstructor);
-          control = this.createControl(config) as FormGroup;
+          const classConfig = this.configs.get(config.classConstructor);
+          if (!(classConfig instanceof NgvFormClassConfig)) {
+            throw new Error(`不能创建属性${config.propertyKey}子控件组,${config.classConstructor.name}没有配置表单控件组`);
+          }
+          control = this.createControl(classConfig) as FormGroup;
         }
         return control;
       }
