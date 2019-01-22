@@ -24,6 +24,7 @@ jobs:
   build:
     executor: npm
     steps:
+      - checkout
       - restore_cache:
           key: restore_cache-{{ checksum "package.json"}}
       - run:
@@ -38,6 +39,7 @@ jobs:
   test:
     executor: npm
     steps:
+      - checkout
       - restore_cache:
           key: restore_cache-{{ checksum "package.json"}}
       - run:
@@ -52,6 +54,7 @@ jobs:
   build-docs:
     executor: npm
     steps:
+      - checkout
       - restore_cache:
           key: restore_cache-{{ checksum "package.json"}}
       - run:
@@ -63,6 +66,7 @@ jobs:
   deploy-docs:
     executor: npm
     steps:
+      - checkout
       - restore_cache:
           key: restore_cache-{{ checksum "package.json"}}
       - run:
