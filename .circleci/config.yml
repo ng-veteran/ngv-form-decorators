@@ -5,11 +5,8 @@ executors:
     docker:
       - image: circleci/node:10-browsers-legacy
 jobs:
-  lib:
+  update_dependencies:
     executor: npm
-    branches:
-      ignore:
-        - gh-pages
     steps:
       - checkout
       - run:
@@ -18,12 +15,15 @@ jobs:
       - restore_cache:
           key: restore_cache-{{ checksum "package.json"}}
       - run:
-          name: install-dependencies
+          name: install-npm
           command: npm install
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
+  build:
+    executor: npm
+    steps:
       - run:
           name: lint
           command: npm run lint ngv-form-decorators
@@ -33,6 +33,9 @@ jobs:
       - store_artifacts:
           path: dist/ngv-form-decorators
           destination: ngv-form-decorators
+  test:
+    executor: npm
+    steps:
       - run:
           name: test
           command: npm run test ngv-form-decorators -- --watch false --code-coverage   --progress false
@@ -42,28 +45,44 @@ jobs:
       - run:
           name: coverage
           command:  bash <(curl -s https://codecov.io/bash)
-  docs:
+  build-docs:
     executor: npm
-    branches:
-      only:
-        - master
     steps:
-      - checkout
       - run:
           name: docs-build
           command: npm run build -- --prod --base-href "https://ng-veteran.github.io/ngv-form-decorators/"
       - store_artifacts:
           path: dist/ngv-form-decorators-demo
           destination: ngv-form-decorators-demo
+  deploy-docs:
+    executor: npm
+    steps:
       - run:
           name: docs-deploy
           command: npx angular-cli-ghpages --dir dist/ngv-form-decorators-demo
 workflows:
   version: 2.1
-  update_build_test_deploy-docs:
+  publish:
     jobs:
-      - lib
-      - docs
-
-
-
+      - update_dependencies:
+          filters:
+            branches:
+              ignore:
+                - gh-pages
+      - test:
+          requires:
+            - update_dependencies
+          filters:
+            branches:
+              ignore:
+                - gh-pages
+      - build:
+          requires:
+            - update_dependencies
+      - build-docs:
+          requires:
+            - update_dependencies
+            - build
+      - deploy-docs:
+          requires:
+            - build-docs
