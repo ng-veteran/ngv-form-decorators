@@ -21,7 +21,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
-  build:
+  lint:
     executor: npm
     steps:
       - checkout
@@ -30,6 +30,12 @@ jobs:
       - run:
           name: lint
           command: npm run lint ngv-form-decorators
+  build:
+    executor: npm
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json"}}
       - run:
           name: build
           command: npm run build ngv-form-decorators
@@ -66,9 +72,7 @@ jobs:
   deploy-docs:
     executor: npm
     steps:
-      - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json"}}
+      - run: ls
       - run:
           name: docs-deploy
           command: npx angular-cli-ghpages --dir dist/ngv-form-decorators-demo
@@ -81,20 +85,23 @@ workflows:
             branches:
               ignore:
                 - gh-pages
+      - lint:
+          requires:
+            - update_dependencies
       - test:
           requires:
             - update_dependencies
-          filters:
-            branches:
-              ignore:
-                - gh-pages
       - build:
           requires:
             - update_dependencies
       - build-docs:
           requires:
+            - lint
             - build
             - test
+          branches:
+            only:
+              - master
       - deploy-docs:
           requires:
             - build-docs
