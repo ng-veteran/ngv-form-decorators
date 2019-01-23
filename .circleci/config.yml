@@ -72,10 +72,11 @@ jobs:
   deploy-docs:
     executor: npm
     steps:
-      - run: ls
       - run:
           name: docs-deploy
-          command: npx angular-cli-ghpages --dir dist/ngv-form-decorators-demo
+          command: |
+           ls
+           npx angular-cli-ghpages --dir dist/ngv-form-decorators-demo
 workflows:
   version: 2.1
   publish:
