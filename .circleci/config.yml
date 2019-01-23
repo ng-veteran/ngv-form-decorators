@@ -72,7 +72,7 @@ jobs:
           destination: ngv-form-decorators-demo
       - run:
           name: deploy
-          command: npm run ghpages -- --repo https://63e814d7b62b6daa854cbd190a1a6e2614726888@github.com/ng-veteran/ngv-form-decorators  --dir dist/ngv-form-decorators-demo --no-silent --name cller --email change_job@outlook.com
+          command: npm run ghpages -- --repo https://github.com/ng-veteran/ngv-form-decorators  --dir dist/ngv-form-decorators-demo --no-silent --name cller --email change_job@outlook.com
 workflows:
   version: 2.1
   publish:
