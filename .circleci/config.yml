@@ -57,7 +57,7 @@ jobs:
       - run:
           name: coverage
           command:  bash <(curl -s https://codecov.io/bash)
-  build-docs:
+  deploy-docs:
     executor: npm
     steps:
       - checkout
@@ -69,14 +69,9 @@ jobs:
       - store_artifacts:
           path: dist/ngv-form-decorators-demo
           destination: ngv-form-decorators-demo
-  deploy-docs:
-    executor: npm
-    steps:
       - run:
           name: docs-deploy
-          command: |
-           ls
-           npx angular-cli-ghpages --dir dist/ngv-form-decorators-demo
+          command: npx angular-cli-ghpages --dir dist/ngv-form-decorators-demo
 workflows:
   version: 2.1
   publish:
@@ -95,7 +90,7 @@ workflows:
       - build:
           requires:
             - update_dependencies
-      - build-docs:
+      - deploy-docs:
           requires:
             - lint
             - build
@@ -103,6 +98,3 @@ workflows:
           branches:
             only:
               - master
-      - deploy-docs:
-          requires:
-            - build-docs
