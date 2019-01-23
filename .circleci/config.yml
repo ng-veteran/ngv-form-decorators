@@ -1,6 +1,8 @@
 version: 2.1
 executors:
   npm:
+    environment:
+      GH_TOKEN: af6bec0e13093f6fc4d460605c73785325bf2513
     working_directory: ~/ngv-form-decorators
     docker:
       - image: circleci/node:10-browsers-legacy
