@@ -71,7 +71,7 @@ jobs:
           destination: ngv-form-decorators-demo
       - run:
           name: deploy
-          command: npx angular-cli-ghpages --dir dist/ngv-form-decorators-demo
+          command: npm run ghpages -- --dir dist/ngv-form-decorators-demo
 workflows:
   version: 2.1
   publish:
