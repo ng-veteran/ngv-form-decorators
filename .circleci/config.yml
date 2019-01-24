@@ -93,6 +93,8 @@ workflows:
     jobs:
       - update_dependencies:
           filters:
+            tags:
+              only: /^v.*/
             branches:
               ignore:
                 - gh-pages
