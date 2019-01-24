@@ -56,7 +56,7 @@ jobs:
           name: npm publish
           command: |
             cd dist/ngv-form-decorators
-            npm publish
+            npm publish --access public
   test:
     executor: npm
     steps:
