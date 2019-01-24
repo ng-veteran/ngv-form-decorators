@@ -55,8 +55,8 @@ jobs:
       - run:
           name: npm publish
           command: |
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
             cd dist/ngv-form-decorators
+            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN">.npmrc
             npm publish --access public
   test:
     executor: npm
