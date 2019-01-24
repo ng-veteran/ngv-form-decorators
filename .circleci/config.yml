@@ -55,6 +55,7 @@ jobs:
       - run:
           name: npm publish
           command: |
+            echo $NPM_TOKEN
             cd dist/ngv-form-decorators
             npm publish --access public
   test:
