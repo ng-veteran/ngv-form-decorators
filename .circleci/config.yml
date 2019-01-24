@@ -44,14 +44,14 @@ jobs:
           path: dist/ngv-form-decorators
           destination: ngv-form-decorators
       - save_cache:
-          key: dist-ngv-form-decorators{{.CIRCLE_WORKFLOW_ID}}
+          key: dist-ngv-form-decorators{{ CIRCLE_WORKFLOW_ID }}
           paths:
             - dist/ngv-form-decorators
   deploy-package:
     executor: npm
     steps:
       - restore_cache:
-          key: dist-ngv-form-decorators{{.CIRCLE_WORKFLOW_ID}}
+          key: dist-ngv-form-decorators{{ CIRCLE_WORKFLOW_ID }}
       - run:
           name: npm publish
           command: |
