@@ -5,12 +5,14 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "postbuild:ngv-form-decorators": "cp ./README.md ./dist/ngv-form-decorators/",
+    "build:ngv-form-decorators": "ng build ngv-form-decorators",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "ghpages": "angular-cli-ghpages"
   },
-  "private": true,
+  "license": "MIT",
   "dependencies": {
     "@angular/animations": "~7.1.0",
     "@angular/common": "~7.1.0",

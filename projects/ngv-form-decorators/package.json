@@ -1,6 +1,16 @@
 {
   "name": "@ng-veteran/ngv-form-decorators",
   "version": "0.0.3-0",
+  "homepage": "https://github.com/ng-veteran/ngv-form-decorators#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ng-veteran/ngv-form-decorators"
+  },
+  "bugs": {
+    "url": "https://github.com/ng-veteran/ngv-form-decorators/issues",
+    "email": "change_job@outlook.com"
+  },
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^7.1.0",
     "@angular/core": "^7.1.0",
