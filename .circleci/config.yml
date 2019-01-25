@@ -90,15 +90,28 @@ jobs:
           command: npm run ghpages -- --repo https://github.com/ng-veteran/ngv-form-decorators  --dir dist/ngv-form-decorators-demo --no-silent --name cller --email change_job@outlook.com
 workflows:
   version: 2.1
+  prebuild:
+    jobs:
+      - update_dependencies:
+          filters:
+            branches:
+              ignore:
+                - gh-pages
+      - lint:
+          requires:
+            - update_dependencies
+      - test:
+          requires:
+            - update_dependencies
+      - build:
+          requires:
+            - update_dependencies
   publish:
     jobs:
       - update_dependencies:
           filters:
             tags:
-              only: /^v.*/
-            branches:
-              ignore:
-                - gh-pages
+              only: /^v[\d]+(\.\d+){2,2}(-\d+)?^/
       - lint:
           requires:
             - update_dependencies
@@ -122,6 +135,4 @@ workflows:
             - lint
             - build
             - test
-          filters:
-            tags:
-              only: /^v[\d]+(\.\d+){2,2}(-\d+)?^/
+
