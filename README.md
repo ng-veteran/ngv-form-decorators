@@ -8,8 +8,6 @@
 
 ## 为什么使用它？(Why use it ?)
 
->
-
 * 表单配置与数据模型统一配置
   ``` typescript
     import { NgvFormGroup, NgvFormControl } from 'projects/ngv-form-decorators/src/public_api';
@@ -41,4 +39,3 @@
     form: FormGroup;
   }
   ```
->

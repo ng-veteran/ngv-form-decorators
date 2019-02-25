@@ -92,11 +92,7 @@ workflows:
   version: 2.1
   prebuild:
     jobs:
-      - update_dependencies:
-          filters:
-            branches:
-              ignore:
-                - gh-pages
+      - update_dependencies
       - lint:
           requires:
             - update_dependencies
@@ -106,6 +102,10 @@ workflows:
       - build:
           requires:
             - update_dependencies
+      filters:
+        branches:
+          only:
+            - master
   publish:
     jobs:
       - update_dependencies:
@@ -135,4 +135,6 @@ workflows:
             - lint
             - build
             - test
-
+      filters:
+        tags:
+          only: /^v.*/

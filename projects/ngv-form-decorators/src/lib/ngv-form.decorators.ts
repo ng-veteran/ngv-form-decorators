@@ -5,11 +5,21 @@ import { AbstractControl, FormControl, FormArray, FormGroup } from '@angular/for
 import { NgvFormClassConfig } from './ngv-form-class-config';
 import { NgvFormPropertyConfig } from './ngv-form-property-config';
 
-
+/**
+ * 表单注解配置方法
+ * @ignore
+ */
 export class NgvFormDecorators {
 
   static configs = new Map<Function, NgvFormClassConfig>();
 
+  /**
+   *
+   * @param type 控件类型
+   * @param target 配置目标
+   * @param propertyKey 配置目标属性名称
+   * @param customConfig 自定义配置信息 {@Link NgvFormConfig}
+   */
   static addConfig(
     type: NgvFormControlType,
     target: Object | Function,
@@ -65,7 +75,10 @@ export class NgvFormDecorators {
     }
   }
 
-
+  /**
+   * 创建表单控件
+   * @param config 表单控件配置 {@link NgvFormClassConfig|NgvFormPropertyConfig}
+   */
   static createControl(config: NgvFormClassConfig | NgvFormPropertyConfig): AbstractControl {
 
     if (config.ignore) {
