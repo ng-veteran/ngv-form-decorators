@@ -105,7 +105,7 @@ workflows:
       - build:
           requires:
             - update_dependencies
-  prebuild:
+  publish:
     jobs:
       - update_dependencies:
           filters:
