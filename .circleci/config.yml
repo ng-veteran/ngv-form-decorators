@@ -105,4 +105,28 @@ workflows:
       - build:
           requires:
             - update_dependencies
-
+  prebuild:
+    jobs:
+      - update_dependencies:
+          filters:
+            tags:
+              only: /^v.*/
+      - lint:
+          requires:
+            - update_dependencies
+      - test:
+          requires:
+            - update_dependencies
+      - build:
+          requires:
+            - update_dependencies
+      - deploy-package:
+          requires:
+            - lint
+            - test
+            - build
+      - deploy-docs:
+          requires:
+            - lint
+            - test
+            - build
