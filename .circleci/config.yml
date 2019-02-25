@@ -92,7 +92,10 @@ workflows:
   version: 2.1
   prebuild:
     jobs:
-      - update_dependencies
+      - update_dependencies:
+          filters:
+            branches:
+              only: master
       - lint:
           requires:
             - update_dependencies
@@ -102,6 +105,4 @@ workflows:
       - build:
           requires:
             - update_dependencies
-      filters:
-        branches:
-          only: master
+
