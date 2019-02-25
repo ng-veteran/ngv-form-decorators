@@ -93,16 +93,28 @@ workflows:
   prebuild:
     jobs:
       - update_dependencies
+          filters:
+            branches:
+              only:
+                - master
       - lint:
           requires:
             - update_dependencies
+          filters:
+            branches:
+              only:
+                - master
       - test:
           requires:
             - update_dependencies
+          filters:
+            branches:
+              only:
+                - master
       - build:
           requires:
             - update_dependencies
-      filters:
-        branches:
-          only:
-            - master
+          filters:
+            branches:
+              only:
+                - master
