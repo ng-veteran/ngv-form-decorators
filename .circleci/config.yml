@@ -73,15 +73,27 @@ jobs:
       - run:
           name: coverage
           command:  bash <(curl -s https://codecov.io/bash)
-  deploy-docs:
+  build-docs:
     executor: npm
     steps:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json"}}
       - run:
-          name: Build
-          command: npm run build -- --prod --base-href "https://ng-veteran.github.io/ngv-form-decorators/" --progress false
+          name: build-docs
+          command:  npm run build -- --prod --base-href "https://ng-veteran.github.io/ngv-form-decorators/" --progress false
+      - save_cache:
+          key: dist/ngv-form-decorators-demo{{ .Environment.CIRCLE_WORKFLOW_ID }}
+          paths:
+            - dist/ngv-form-decorators-demo
+  deploy-docs:
+    executor: npm
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "package.json"}}
+            - dist/ngv-form-decorators-demo{{ .Environment.CIRCLE_WORKFLOW_ID }}
       - store_artifacts:
           path: dist/ngv-form-decorators-demo
           destination: ngv-form-decorators-demo
@@ -90,25 +102,14 @@ jobs:
           command: npm run ghpages -- --repo https://github.com/ng-veteran/ngv-form-decorators  --dir dist/ngv-form-decorators-demo --no-silent --name cller --email change_job@outlook.com
 workflows:
   version: 2.1
-  prebuild:
-    jobs:
-      - update_dependencies:
-          filters:
-            branches:
-              only: master
-      - lint:
-          requires:
-            - update_dependencies
-      - test:
-          requires:
-            - update_dependencies
-      - build:
-          requires:
-            - update_dependencies
   publish:
     jobs:
       - update_dependencies:
           filters:
+            branches:
+              ignore:
+                - gh-pages
+              only: master
             tags:
               only: /^v.*/
       - lint:
@@ -120,13 +121,28 @@ workflows:
       - build:
           requires:
             - update_dependencies
+      - build-docs:
+          requires:
+            - update_dependencies
       - deploy-package:
           requires:
             - lint
             - test
             - build
+          filters:
+            branches:
+              ignore:
+                - master
+            tags:
+              only: /^v.*/
       - deploy-docs:
           requires:
             - lint
             - test
             - build
+          filters:
+            branches:
+              ignore:
+                - master
+            tags:
+              only: /^v.*/
