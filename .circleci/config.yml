@@ -46,7 +46,7 @@ jobs:
       - save_cache:
           key: dist-ngv-form-decorators{{ .Environment.CIRCLE_WORKFLOW_ID }}
           paths:
-            - dist/ngv-form-decorators
+            - ./dist/ngv-form-decorators
   deploy-package:
     executor: npm
     steps:
@@ -84,7 +84,7 @@ jobs:
       - save_cache:
           key: dist-ngv-form-decorators-demo{{ .Environment.CIRCLE_WORKFLOW_ID }}
           paths:
-            - dist/ngv-form-decorators-demo
+            - ./dist/ngv-form-decorators-demo
       - store_artifacts:
           path: dist/ngv-form-decorators-demo
           destination: ngv-form-decorators-demo
@@ -94,8 +94,8 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "package.json"}}
             - dist-ngv-form-decorators-demo{{ .Environment.CIRCLE_WORKFLOW_ID }}
+            - dependency-cache-{{ checksum "package.json"}}
       - run:
           name: deploy
           command: npm run ghpages -- --repo https://github.com/ng-veteran/ngv-form-decorators  --dir dist/ngv-form-decorators-demo --no-silent --name cller --email change_job@outlook.com
