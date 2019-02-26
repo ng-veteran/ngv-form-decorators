@@ -115,6 +115,9 @@ workflows:
       - lint:
           requires:
             - update_dependencies
+          filters:
+            tags:
+              only: /^v.*/
       - test:
           requires:
             - update_dependencies
