@@ -121,12 +121,21 @@ workflows:
       - test:
           requires:
             - update_dependencies
+          filters:
+            tags:
+              only: /^v.*/
       - build:
           requires:
             - update_dependencies
+          filters:
+            tags:
+              only: /^v.*/
       - build-docs:
           requires:
             - update_dependencies
+          filters:
+            tags:
+              only: /^v.*/
       - deploy-package:
           requires:
             - lint
