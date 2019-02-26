@@ -141,6 +141,7 @@ workflows:
             - lint
             - test
             - build
+            - build-docs
           filters:
             branches:
               ignore:
@@ -152,6 +153,7 @@ workflows:
             - lint
             - test
             - build
+            - build-docs
           filters:
             branches:
               ignore:
