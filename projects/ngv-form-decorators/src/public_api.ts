@@ -3,9 +3,9 @@
  */
 
 export {
-  NgvFormArray,
-  NgvFormControl,
-  NgvFormGroup,
+  NgvFormArrayDecorator,
+  NgvFormControlDecorator,
+  NgvFormGroupDecorator,
   NgvFormBuilder
 } from './lib/ngv-form.decorators';
 export * from './lib/ngv-form.service';

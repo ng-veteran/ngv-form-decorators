@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { NgvFormService } from './ngv-form.service';
-import { NgvFormDecorators, NgvFormControl, NgvFormGroup } from './ngv-form.decorators';
+import { NgvFormDecorators, NgvFormControlDecorator, NgvFormGroupDecorator } from './ngv-form.decorators';
 import { FormGroup, FormControl } from '@angular/forms';
 import { NgvFormClassConfig } from './ngv-form-class-config';
 
@@ -31,7 +31,7 @@ describe('NgvFormService', () => {
     it('应该根据指定类型表单配置，设置属性控件', () => {
 
       class User {
-        @NgvFormControl()
+        @NgvFormControlDecorator()
         name: string;
       }
 

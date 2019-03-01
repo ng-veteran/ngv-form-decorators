@@ -133,7 +133,7 @@ export class NgvFormDecorators {
  * 表单列表
  * @param config 配置
  */
-export function NgvFormArray(config?: Partial<NgvFormConfig>) {
+export function NgvFormArrayDecorator(config?: Partial<NgvFormConfig>) {
   return function (target: Object, propertyKey: string) {
     NgvFormDecorators.addConfig(NgvFormControlType.ARRAY, target, propertyKey, config);
   };
@@ -144,7 +144,7 @@ export function NgvFormArray(config?: Partial<NgvFormConfig>) {
  * 配置一组表单控件
  * @param config 控件配置
  */
-export function NgvFormGroup(config?: Partial<NgvFormConfig>) {
+export function NgvFormGroupDecorator(config?: Partial<NgvFormConfig>) {
   return function (target: Object | Function, propertyKey?: string) {
     console.log(target, propertyKey);
     NgvFormDecorators.addConfig(NgvFormControlType.GROUP, target, propertyKey, config);
@@ -155,7 +155,7 @@ export function NgvFormGroup(config?: Partial<NgvFormConfig>) {
  * 控件注解
  * @param partialConfig 控件配置信息
  */
-export function NgvFormControl(partialConfig?: Partial<NgvFormConfig>) {
+export function NgvFormControlDecorator(partialConfig?: Partial<NgvFormConfig>) {
   return function (target: Object, propertyKey: string) {
     NgvFormDecorators.addConfig(NgvFormControlType.CONTROL, target, propertyKey, partialConfig);
   };

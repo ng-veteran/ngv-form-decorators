@@ -1,6 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NgvFormDecorators, NgvFormGroup, NgvFormBuilder, NgvFormControl, NgvFormArray } from './ngv-form.decorators';
+import {
+  NgvFormDecorators,
+  NgvFormGroupDecorator,
+  NgvFormBuilder,
+  NgvFormControlDecorator,
+  NgvFormArrayDecorator
+} from './ngv-form.decorators';
 import { FormGroup, FormControl, AbstractControl, ValidationErrors, FormArray, Validators } from '@angular/forms';
 import { NgvFormControlType } from './ngv-form-control-type.enum';
 import { NgvFormConfig } from './ngv-form-config';
@@ -17,7 +23,6 @@ describe('NgvFormDecorators', () => {
       get: () => configs
     });
   });
-
 
   describe('#addConfig', () => {
     const defaultConfig: Partial<NgvFormConfig> = {
@@ -388,7 +393,7 @@ describe('NgvFormDecorators', () => {
         const config = {
           validators: validator
         };
-        @NgvFormGroup(config)
+        @NgvFormGroupDecorator(config)
         class User {
         }
 
@@ -397,7 +402,7 @@ describe('NgvFormDecorators', () => {
 
       it('应该类型添加表单控件组子控件组配置', () => {
 
-        @NgvFormGroup()
+        @NgvFormGroupDecorator()
         class Address {
           constructor() { }
         }
@@ -410,9 +415,9 @@ describe('NgvFormDecorators', () => {
           classConstructor: Address
         };
 
-        @NgvFormGroup()
+        @NgvFormGroupDecorator()
         abstract class User {
-          @NgvFormGroup(config)
+          @NgvFormGroupDecorator(config)
           address: Address;
         }
 
@@ -429,9 +434,9 @@ describe('NgvFormDecorators', () => {
           validators: validator
         };
 
-        @NgvFormGroup()
+        @NgvFormGroupDecorator()
         abstract class User {
-          @NgvFormControl(config)
+          @NgvFormControlDecorator(config)
           name: string;
         }
 
@@ -447,9 +452,9 @@ describe('NgvFormDecorators', () => {
           validators: validator
         };
 
-        @NgvFormGroup()
+        @NgvFormGroupDecorator()
         abstract class User {
-          @NgvFormArray(config)
+          @NgvFormArrayDecorator(config)
           permissions: number[];
         }
 
@@ -466,9 +471,9 @@ describe('NgvFormDecorators', () => {
           validators: validator
         };
 
-        @NgvFormGroup()
+        @NgvFormGroupDecorator()
         abstract class User {
-          @NgvFormArray(config)
+          @NgvFormArrayDecorator(config)
           permissions: number[];
         }
 
@@ -513,10 +518,7 @@ describe('NgvFormDecorators', () => {
 
       });
 
-
     });
   });
-
-
 
 });
