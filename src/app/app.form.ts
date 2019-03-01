@@ -1,9 +1,9 @@
-import { NgvFormGroup, NgvFormControl } from 'projects/ngv-form-decorators/src/public_api';
+import { NgvFormGroupDecorator, NgvFormControlDecorator } from 'projects/ngv-form-decorators/src/public_api';
 import { Validators } from '@angular/forms';
 
-@NgvFormGroup()
+@NgvFormGroupDecorator()
 export class AppForm {
-  @NgvFormControl({
+  @NgvFormControlDecorator({
     validators: Validators.required
   })
   input1: string;
