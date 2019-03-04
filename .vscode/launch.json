@@ -4,10 +4,23 @@
   // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [ {
-    "type": "chrome",
-    "request": "launch",
-    "name": "Launch Chrome",
-    "url": "http://localhost:9876/debug.html",
-    "webRoot": "${workspaceFolder}"
-  } ]
+      "type": "chrome",
+      "request": "launch",
+      "name": "[ngv-form-decorators-demo]Launch Chrome",
+      "url": "http://localhost:4200",
+      "webRoot": "${workspaceFolder}"
+    },
+
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "[ngv-form-decorators]Launch Chrome",
+      "url": "http://localhost:9876/debug.html",
+      "webRoot": "${workspaceFolder}",
+      "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "webpack:///./*": "${webRoot}/projects/ngv-form-decorators/*"
+      }
+    }
+  ]
 }

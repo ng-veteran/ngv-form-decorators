@@ -146,7 +146,6 @@ export function NgvFormArrayDecorator(config?: Partial<NgvFormConfig>) {
  */
 export function NgvFormGroupDecorator(config?: Partial<NgvFormConfig>) {
   return function (target: Object | Function, propertyKey?: string) {
-    console.log(target, propertyKey);
     NgvFormDecorators.addConfig(NgvFormControlType.GROUP, target, propertyKey, config);
   };
 }
