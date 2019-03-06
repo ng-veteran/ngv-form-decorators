@@ -9,8 +9,9 @@
 ## 为什么使用它？(Why use it ?)
 
 * 表单配置与数据模型统一配置
+  > 创建文件 app.form.ts
   ``` typescript
-    import { NgvFormGroup, NgvFormControl } from 'projects/ngv-form-decorators/src/public_api';
+    import { NgvFormGroupDecorator, NgvFormControlDecorator } from '@ng-veteran/ngv-form-decorators';
     import { Validators } from '@angular/forms';
 
     @NgvFormGroup()
@@ -22,10 +23,11 @@
     }
   ```
 * 自动注入表单实例
+  > 在组件模块使用表单
   ``` typescript
   import { Component } from '@angular/core';
   import { FormGroup } from '@angular/forms';
-  import { NgvFormBuilder } from 'projects/ngv-form-decorators/src/public_api';
+  import { NgvFormBuilder } from '@ng-veteran/ngv-form-decorators';
   import { AppForm } from './app.form';
 
   @Component({

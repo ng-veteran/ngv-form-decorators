@@ -39,7 +39,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json"}}
       - run:
           name: build
-          command: npm run build ngv-form-decorators
+          command: npm run build:ngv-form-decorators
       - store_artifacts:
           path: dist/ngv-form-decorators
           destination: ngv-form-decorators
