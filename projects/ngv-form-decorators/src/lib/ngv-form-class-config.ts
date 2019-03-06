@@ -8,7 +8,7 @@ export class NgvFormClassConfig extends NgvFormConfig {
   /**
    * 控件类型
    */
-  readonly type = NgvFormControlType.GROUP;
+  readonly type: NgvFormControlType = NgvFormControlType.GROUP;
 
   /**
    * 子控件配置列表,不需要配置
