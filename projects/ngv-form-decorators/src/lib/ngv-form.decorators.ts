@@ -4,6 +4,7 @@ import { isUndefined, isObject, isFunction, isString } from 'util';
 import { AbstractControl, FormControl, FormArray, FormGroup } from '@angular/forms';
 import { NgvFormClassConfig } from './ngv-form-class-config';
 import { NgvFormPropertyConfig } from './ngv-form-property-config';
+import { from } from 'rxjs';
 
 /**
  * 表单注解配置方法
@@ -167,6 +168,6 @@ export function NgvFormControlDecorator(partialConfig?: Partial<NgvFormConfig>) 
 export function NgvFormBuilder(classConstructor: Function) {
   return function (target: Object, propertyKey: string) {
     const form = NgvFormDecorators.build(classConstructor);
-    target[propertyKey] = form;
+    Object.defineProperty(target, propertyKey, from);
   };
 }
