@@ -12,6 +12,7 @@ import { NgvFormControlType } from './ngv-form-control-type.enum';
 import { NgvFormConfig } from './ngv-form-config';
 import { NgvFormClassConfig } from './ngv-form-class-config';
 import { NgvFormPropertyConfig } from './ngv-form-property-config';
+import { OnInit } from '@angular/core';
 
 describe('NgvFormDecorators', () => {
 
@@ -507,14 +508,24 @@ describe('NgvFormDecorators', () => {
         const form = new FormGroup({});
         spyBuilder.and.returnValue(form);
 
-        class Test {
+        class Test implements OnInit {
+
           @NgvFormBuilder(User)
           form: FormGroup;
+
+          ngOnInit(): void {
+          }
         }
 
         const test = new Test();
+        test.ngOnInit();
         expect(spyBuilder).toHaveBeenCalledWith(User);
         expect(test.form).toBe(form);
+
+        const test1 = new Test();
+        test1.ngOnInit();
+        expect(spyBuilder.calls.count()).toBe(2);
+        expect(test1.form).toBe(form);
 
       });
 

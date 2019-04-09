@@ -167,7 +167,13 @@ export function NgvFormControlDecorator(partialConfig?: Partial<NgvFormConfig>) 
  */
 export function NgvFormBuilder(classConstructor: Function) {
   return function (target: Object, propertyKey: string) {
-    const form = NgvFormDecorators.build(classConstructor);
-    Object.defineProperty(target, propertyKey, { value: form });
+
+
+    Object.defineProperty(target, 'ngOnInit', {
+      value: () => {
+        const form = NgvFormDecorators.build(classConstructor);
+        Object.defineProperty(target, propertyKey, { value: form });
+      }
+    });
   };
 }
