@@ -5,6 +5,7 @@ import { AbstractControl, FormControl, FormArray, FormGroup } from '@angular/for
 import { NgvFormClassConfig } from './ngv-form-class-config';
 import { NgvFormPropertyConfig } from './ngv-form-property-config';
 import { from } from 'rxjs';
+import { OnInit } from '@angular/core';
 
 /**
  * 表单注解配置方法
@@ -167,12 +168,15 @@ export function NgvFormControlDecorator(partialConfig?: Partial<NgvFormConfig>) 
  */
 export function NgvFormBuilder(classConstructor: Function) {
   return function (target: Object, propertyKey: string) {
-
+    const { ngOnInit } = target as OnInit;
 
     Object.defineProperty(target, 'ngOnInit', {
-      value: () => {
+      value: function () {
         const form = NgvFormDecorators.build(classConstructor);
         Object.defineProperty(target, propertyKey, { value: form });
+        if (ngOnInit) {
+          ngOnInit.apply(this);
+        }
       }
     });
   };

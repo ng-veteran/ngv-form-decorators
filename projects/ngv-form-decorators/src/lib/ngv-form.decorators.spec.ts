@@ -512,8 +512,9 @@ describe('NgvFormDecorators', () => {
 
           @NgvFormBuilder(User)
           form: FormGroup;
-
+          initNum = 0;
           ngOnInit(): void {
+            this.initNum = 1;
           }
         }
 
@@ -521,11 +522,13 @@ describe('NgvFormDecorators', () => {
         test.ngOnInit();
         expect(spyBuilder).toHaveBeenCalledWith(User);
         expect(test.form).toBe(form);
+        expect(test.initNum).toBe(1);
 
         const test1 = new Test();
         test1.ngOnInit();
         expect(spyBuilder.calls.count()).toBe(2);
         expect(test1.form).toBe(form);
+        expect(test.initNum).toBe(1);
 
       });
 
